@@ -21,7 +21,7 @@ class ImageProcessing
   Subtract()
   {
     push();
-    translate(width/2, height/3.5)
+    translate(width/2, height/4)
     rect(0, 0, width/2, height/2)
 
 
