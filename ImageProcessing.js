@@ -20,7 +20,20 @@ class ImageProcessing
 
   Subtract()
   {
-    
+    push();
+    translate(width/2, height/3.5)
+    rect(0, 0, width/2, height/2)
+
+
+    pop();
+  }
+
+  addText(What="Test", Where=this.Image1, x=0, y=0, w=64, h=16)
+  {
+    push();
+    translate(Where.pos.x, Where.pos.y)
+
+    pop();
   }
   
 }
