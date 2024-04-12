@@ -1,8 +1,14 @@
 html, body {
   margin: 0;
   padding: 0;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: gray;
 }
 
 canvas {
   display: block;
+  border: 5px solid lightgray; /* Optional: Add a border for visibility */
 }

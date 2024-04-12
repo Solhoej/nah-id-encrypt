@@ -1,7 +1,13 @@
-function setup() {
-  createCanvas(400, 400);
+let Machine;
+
+function setup() 
+{
+  createCanvas(800, 800);
+  Machine = new ImageProcessing("Mirsad 1.jpg", "Mirsad 2.jpg")
 }
 
-function draw() {
+function draw() 
+{
   background(220);
+  Machine.Original();
 }
