@@ -11,4 +11,5 @@ html, body {
 canvas {
   display: block;
   border: 5px solid lightgray; /* Optional: Add a border for visibility */
+  flex: none;
 }
