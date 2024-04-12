@@ -10,4 +10,5 @@ function draw()
 {
   background(220);
   Machine.Original();
+  Machine.Subtract();
 }
