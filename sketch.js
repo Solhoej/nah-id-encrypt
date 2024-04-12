@@ -4,13 +4,14 @@ let States = [
   "Add 2 Images",
   "Subtract 2 Images",
   "Add 1 Image and 1 text",
+  "Grayscale",
 ]
 
 function setup() 
 {
   createCanvas(800, 800);
 
-  Machine = new ImageProcessing("Images/Mirsad 1.jpg", "Images/Mirsad 2.jpg");
+  Machine = new ImageProcessing("Images/Sten.png", "Images/tester.png");
 
   Selector = createSelect();
   
@@ -71,6 +72,10 @@ function draw()
       case States[2]:
       Machine.ImageWithText();
       showUi(true);
+        break;
+        case States[3]:
+      Machine.Grayscale();
+      showUi(false);
         break;
     }
   }

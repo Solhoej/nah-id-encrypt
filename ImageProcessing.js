@@ -8,7 +8,7 @@ class ImageProcessing
     this.w = w;
     this.h = h;
     this.Process = false;
-    this.img = createImage(800, this.h);
+    this.img = createImage(101, 92);
   }
 
   setProcess(value=true)
@@ -48,29 +48,63 @@ class ImageProcessing
     pop();
   }
 
-  Subtract()
-  {
-    push();
-    translate(width/2, height/4)
-    rect(0, 0, width/2, height/2);
-
-    pop();
-  }
-
-  Add() {
+  Subtract() {
     push();
     translate(width/2, height/4);
-    image(this.img, 0, 0, width/2, height/2);
     rect(0, 0, width/2, height/2);
 
     for(let i = 0; i < this.Image1.pixels.length; i++)
     {
-      this.img.pixels[i] = this.Image1.pixels[i];
+      this.img.pixels[i] = this.Image1.pixels[i] - this.Image2.pixels[i];
+      this.img.pixels[i+1] = this.Image1.pixels[i+1] - this.Image2.pixels[i+1];
+      this.img.pixels[i+2] = this.Image1.pixels[i+2] - this.Image2.pixels[i+2];
+      this.img.pixels[i+3] = this.Image1.pixels[i+3] - this.Image2.pixels[i+3];
     }
 
     this.img.updatePixels();
 
+    image(this.img, 0, 0, width/2, height/2);
+
     pop();
+}
+
+  Add() {
+    push();
+    translate(width/2, height/4);
+    rect(0, 0, width/2, height/2);
+
+    for(let i = 0; i < this.Image1.pixels.length; i++)
+    {
+      this.img.pixels[i] = this.Image1.pixels[i] + this.Image2.pixels[i];
+      this.img.pixels[i+1] = this.Image1.pixels[i+1] + this.Image2.pixels[i+1];
+      this.img.pixels[i+2] = this.Image1.pixels[i+2] + this.Image2.pixels[i+2];
+      this.img.pixels[i+3] = this.Image1.pixels[i+3] + this.Image2.pixels[i+3];
+    }
+
+    this.img.updatePixels();
+
+    image(this.img, 0, 0, width/2, height/2);
+
+    pop();
+}
+
+Grayscale() {
+  this.img.loadPixels();
+
+  for (let i = 0; i < this.Image1.pixels.length; i += 4) {
+    let r = this.Image1.pixels[i];
+    let g = this.Image1.pixels[i+1];
+    let b = this.Image1.pixels[i+2];
+
+    let gray = (r + g + b) / 3;
+
+    this.Image1.pixels[i] = gray;
+    this.Image1.pixels[i+1] = gray;
+    this.Image1.pixels[i+2] = gray;
+  }
+
+  this.Image1.updatePixels();
+  image(this.Image1, 0, 0, width/2, height/2);
 }
 
   getOriginalImageSize1()
