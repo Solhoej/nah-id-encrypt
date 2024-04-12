@@ -10,9 +10,9 @@ function setup()
 {
   createCanvas(800, 800);
 
-  Machine = new ImageProcessing("Images/Mirsad 1.jpg", "Images/Mirsad 2.jpg")
+  Machine = new ImageProcessing("Images/Mirsad 1.jpg", "Images/Mirsad 2.jpg");
 
-  Selector = createSelect()
+  Selector = createSelect();
   
   for(let i = 0; i < States.length; i++)
   {

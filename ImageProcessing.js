@@ -4,7 +4,7 @@ class ImageProcessing
   {
     this.pos = createVector(x, y);
     this.Image1 = loadImage(Image1);
-    this.Image2 = loadImage(Image2);    
+    this.Image2 = loadImage(Image2);
     this.w = w;
     this.h = h;
     this.Process = false;
@@ -20,8 +20,8 @@ class ImageProcessing
   {
     push();
     translate(this.pos.x, this.pos.y)
-    image(this.Image1, 0, 0, this.w/2, this.h/2)
-    image(this.Image2, 0, this.h/2, this.w/2, this.h/2)
+    image(this.Image1, 0, 0, this.w/2, this.h/2);
+    image(this.Image2, 0, this.h/2, this.w/2, this.h/2);
     pop();
   }
 
@@ -29,8 +29,18 @@ class ImageProcessing
   {
     push();
     translate(this.pos.x, this.pos.y)
-    image(this.Image1, 0, 0, this.w/2, this.h/2)
+    image(this.Image1, 0, 0, this.w/2, this.h/2);
     //image(this.Image2, 0, this.h/2, this.w/2, this.h/2)
+
+    if(inputBox.value().length < 10)
+    {
+      textSize(100);
+    }
+    else
+    {
+      textSize((this.Image1.width/4) / inputBox.value().length);
+    }
+    //text(inputBox.value(), 0, 250);
     pop();
   }
 
@@ -38,7 +48,7 @@ class ImageProcessing
   {
     push();
     translate(width/2, height/4)
-    rect(0, 0, width/2, height/2)
+    rect(0, 0, width/2, height/2);
 
     pop();
   }
@@ -47,7 +57,7 @@ class ImageProcessing
   {
     push();
     translate(width/2, height/4)
-    rect(0, 0, width/2, height/2)
+    rect(0, 0, width/2, height/2);
 
 
     pop();
