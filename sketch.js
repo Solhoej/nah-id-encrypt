@@ -74,5 +74,6 @@ function draw()
         break;
     }
   }
+
   messageEncoder();
 }
