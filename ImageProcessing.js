@@ -40,8 +40,7 @@ class ImageProcessing
     {
       textSize((this.Image1.width/4) / inputBox.value().length);
     }
-
-    text(inputBox.value(), 0, 250);
+    //text(inputBox.value(), 0, 250);
     pop();
   }
 
