@@ -63,8 +63,6 @@ class ImageProcessing
     image(this.img, 0, 0, width/2, height/2);
     rect(0, 0, width/2, height/2);
 
-    print(this.Image1.pixels.length)
-
     for(let i = 0; i < this.Image1.pixels.length; i++)
     {
       this.img.pixels[i] = this.Image1.pixels[i];
