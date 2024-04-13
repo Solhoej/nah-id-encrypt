@@ -7,9 +7,9 @@ function messageEncoder() {
         graphics.textAlign(LEFT, CENTER);
         graphics.fill(0);
 
-        graphics.text(message, graphics.width / 2, graphics.height / 2);
+        graphics.text(message, 0, 25);
 
-        imgMessage = graphics.get();
+        let imgMessage = graphics.get();
 
         console.log("Image Width:", imgMessage.width);
         console.log("Image Height:", imgMessage.height);
@@ -34,8 +34,12 @@ function messageEncoder() {
 
         imgMessage.updatePixels();
 
-        image(imgMessage, 10, 500);
+        image(imgMessage, textX.value(),textY.value());
+
+        return imgMessage;
+
     } else {
         console.log("Skriv noget i tekstfeltet");
     }
+
 }

@@ -34,6 +34,17 @@ function setup()
   inputButton.position(10, 80);
   inputButton.hide()
   inputButton.mousePressed(Machine.setProcess)
+
+  textX = createSlider(0, width/2, 0, 1);
+  textY = createSlider(0, height/2, 0, 1);
+  textY.style('transform', 'rotate(270deg)');
+
+  textX.position(212,height+75);
+  textY.position(130,height-12);
+
+  textX.hide();
+  textY.hide();
+
 }
 
 function showUi(truefalse)
@@ -42,11 +53,15 @@ function showUi(truefalse)
   {
     inputBox.show()
     inputButton.show()
+    textY.show();
+    textX.show();
   }
   else if(truefalse == false)
   {
     inputBox.hide()
     inputButton.hide()
+    textY.hide();
+    textX.hide();
   }
 }
 
@@ -80,5 +95,4 @@ function draw()
     }
   }
 
-  messageEncoder();
 }
