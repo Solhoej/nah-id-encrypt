@@ -5,6 +5,8 @@ let States = [
   "Subtract 2 Images",
   "Add 1 Image and 1 text",
   "Grayscale",
+  "Blackline",
+  "Invert",
 ]
 
 function setup() 
@@ -88,10 +90,18 @@ function draw()
       Machine.ImageWithText();
       showUi(true);
         break;
-        case States[3]:
+      case States[3]:
       Machine.Grayscale();
       showUi(false);
         break;
+      case States[4]:
+        Machine.Blackline();
+        showUi(false);
+          break;
+      case States[5]:
+        Machine.Invert();
+        showUi(false);
+          break;
     }
   }
 
