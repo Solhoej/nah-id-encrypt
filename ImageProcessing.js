@@ -8,6 +8,7 @@ class ImageProcessing
     this.Image2 = loadImage(Image2);
     this.Image1Gray = loadImage(Image1);
     this.ImageBlackline = loadImage(Image1);
+    this.InvertedImage = loadImage(Image1);
     this.w = w;
     this.h = h;
     this.Process = false;
