@@ -7,6 +7,7 @@ class ImageProcessing
     this.Image1 = loadImage(Image1);
     this.Image2 = loadImage(Image2);
     this.Image1Gray = loadImage(Image1);
+    this.ImageBlackline = loadImage(Image1);
     this.w = w;
     this.h = h;
     this.Process = false;
@@ -38,6 +39,7 @@ class ImageProcessing
     this.Image1.loadPixels();
     this.Image2.loadPixels();
     this.Image1Gray.loadPixels();
+    this.ImageBlackline.loadPixels();
     pop();
   }
 
@@ -164,6 +166,32 @@ Grayscale() {
     translate(Where.pos.x, Where.pos.y)
 
     pop();
+  }
+
+  Blackline(where = this.ImageBlackline.width/2, newW=10)
+  {
+    push();
+    translate(0, 0);
+    this.ImageBlackline.loadPixels();
+
+    for(let i = 0; i < this.ImageBlackline.pixels.length; i += where * 4)
+    {
+      for(let j = 0; j < newW; j += 4)
+      {
+        this.ImageBlackline.pixels[i+j] = 0
+        this.ImageBlackline.pixels[i+j+1] = 0
+        this.ImageBlackline.pixels[i+j+2] = 0
+      }
+    }
+
+    this.ImageBlackline.updatePixels();
+    image(this.ImageBlackline, 0, 0, width/2, height/2);
+    pop();
+  }
+
+  invert()
+  {
+    
   }
   
   messageEncoder() {
