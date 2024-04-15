@@ -192,7 +192,13 @@ Grayscale() {
 
   invert()
   {
+    push();
+    translate(0, 0);
+    this.InvertedImage.loadPixels();
+
     
+
+    pop();
   }
   
   messageEncoder() {
