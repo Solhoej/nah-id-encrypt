@@ -196,8 +196,6 @@ Grayscale() {
     let x;
     let y;
 
-    
-
     return [x, y]
   }
 
@@ -232,14 +230,42 @@ Grayscale() {
   rotate(theta=5)
   {
     push()
+
+    let Pos = this.getRotation(theta);
+
+    let xRot = Pos[0];
+    let yRot = Pos[1];
+
     translate(width/4, height/4)
     this.RotatedImage.loadPixels();
 
-
-
     this.RotatedImage.updatePixels();
-    image(this.RotatedImage, 0, 0, width/2, height/2);
+    image(this.RotatedImage, xRot, yRot, width/2, height/2);
     pop()
+  }
+
+  getRotation(theta=5)
+  {
+    let xRot;
+    let yRot;
+
+    for(let y = 1; y < this.RotatedImage.height; y++)
+    {
+      for(let x = 1; x < this.RotatedImage.width; x++)
+      {
+        let pixelLength = sqrt(x*x + y*y);
+        let pixelVink = atan(y/x);
+
+        let pixelRotate = pixelVink + theta;
+        
+        xRot = cos(pixelRotate) * pixelLength;
+        yRot = sin(pixelRotate) * pixelLength;
+
+        print(pixelVink);
+      }
+
+      return [xRot, yRot];
+    }
   }
   
   messageEncoder() {
