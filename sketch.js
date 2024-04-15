@@ -7,12 +7,13 @@ let States = [
   "Grayscale",
   "Blackline",
   "Invert",
+  "Rotate",
 ]
 
 function setup() 
 {
   createCanvas(800, 800);
-
+  angleMode(DEGREES);
   Machine = new ImageProcessing("Images/Sten.png", "Images/tester.png");
 
   Selector = createSelect();
@@ -47,6 +48,9 @@ function setup()
   textX.hide();
   textY.hide();
 
+  vinkelSlider = createSlider(0, 360, 0, 1);
+  vinkelSlider.hide();
+
 }
 
 function showUi(truefalse)
@@ -64,6 +68,7 @@ function showUi(truefalse)
     inputButton.hide()
     textY.hide();
     textX.hide();
+    vinkelSlider.hide();
   }
 }
 
@@ -99,8 +104,13 @@ function draw()
         showUi(false);
           break;
       case States[5]:
-        Machine.Invert();
+        Machine.invert();
         showUi(false);
+          break;
+      case States[6]:
+        Machine.rotate(vinkelSlider.value());
+        showUi(false);
+        vinkelSlider.show();
           break;
     }
   }

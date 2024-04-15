@@ -9,11 +9,12 @@ class ImageProcessing
     this.Image1Gray = loadImage(Image1);
     this.ImageBlackline = loadImage(Image1);
     this.InvertedImage = loadImage(Image1);
+    this.RotatedImage = loadImage(Image1);
     this.w = w;
     this.h = h;
     this.Process = false;
-    this.img = createImage(101, 92);
-    this.imgTxt = createImage(101, 92);
+    this.img = createImage(100, 100);
+    this.imgTxt = createImage(100, 100);
   }
 
   setProcess(value=true)
@@ -27,11 +28,10 @@ class ImageProcessing
     push();
     translate(this.pos.x, this.pos.y)
 
-    this.img.width = this.Image1.width;
-    this.img.height = this.Image1.height;
 
-    this.imgTxt.width = this.Image1.width;
-    this.imgTxt.height = this.Image1.height;
+    this.img.resize(this.Image1.width, this.Image1.height);
+    this.imgTxt.resize(this.Image1.width, this.Image1.height);
+    this.Image2.resize(this.Image1.width, this.Image1.height);
 
     image(this.Image1, 0, 0, this.w, this.h);
     image(this.Image2, 0, height/2, this.w, this.h);
@@ -41,6 +41,7 @@ class ImageProcessing
     this.Image2.loadPixels();
     this.Image1Gray.loadPixels();
     this.ImageBlackline.loadPixels();
+    this.RotatedImage.loadPixels();
     pop();
   }
 
@@ -190,15 +191,55 @@ Grayscale() {
     pop();
   }
 
+  myGetPixel()
+  {
+    let x;
+    let y;
+
+    
+
+    return [x, y]
+  }
+
   invert()
   {
     push();
     translate(0, 0);
     this.InvertedImage.loadPixels();
 
-    
+    for(let y = 0; y < this.Image1.height; y++)
+    {
+      for(let x = 0; x < this.Image1.width / 2; x++)
+      {
+        let leftPixel = (x + y * this.Image1.width) * 4;
+        let rightPixel = ((this.Image1.width - x - 1) + y * this.Image1.width) * 4;
+
+        for(let i = 0; i < 4; i++) {
+          let temp = this.Image1.pixels[leftPixel + i];
+          this.InvertedImage.pixels[leftPixel + i] = this.Image1.pixels[rightPixel + i];
+          this.InvertedImage.pixels[rightPixel + i] = temp;
+        }
+      }
+    }
+
+    this.InvertedImage.updatePixels();
+    image(this.Image1, 0, 0, width/2, height/2);
+    image(this.InvertedImage, 0, height/2, width/2, height/2);
 
     pop();
+  }
+
+  rotate(theta=5)
+  {
+    push()
+    translate(width/4, height/4)
+    this.RotatedImage.loadPixels();
+
+
+
+    this.RotatedImage.updatePixels();
+    image(this.RotatedImage, 0, 0, width/2, height/2);
+    pop()
   }
   
   messageEncoder() {
