@@ -49,7 +49,7 @@ function setup()
   textX.hide();
   textY.hide();
 
-  vinkelSlider = createSlider(1, 360, 1, 1);
+  vinkelSlider = createSlider(0, 360, 0, 1);
   vinkelSlider.hide();
 
   Video = createCapture(VIDEO);
