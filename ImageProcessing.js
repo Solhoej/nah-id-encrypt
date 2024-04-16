@@ -230,42 +230,50 @@ Grayscale() {
   rotate(theta=5)
   {
     push()
-
-    let Pos = this.getRotation(theta);
-
-    let xRot = Pos[0];
-    let yRot = Pos[1];
-
     translate(width/4, height/4)
-    this.RotatedImage.loadPixels();
+    print("Rotating");
+
+    let getRGBA;
+    let rotation;
+
+    for(let x = 0; x < this.RotatedImage.width; x++)
+    {
+      for(let y = 0; y < this.RotatedImage.height; y++)
+      {
+        getRGBA = this.getPixel(x, y);
+        rotation = this.getRotation(x, y, getRGBA[0], getRGBA[1], getRGBA[2], getRGBA[3], theta);
+      }
+    }
 
     this.RotatedImage.updatePixels();
-    image(this.RotatedImage, xRot, yRot, width/2, height/2);
+    image(this.RotatedImage, 0, 0, width/2, height/2);
     pop()
   }
 
-  getRotation(theta=5)
+  getRotation(x, y, r, g, b, a, theta=0)
   {
-    let xRot;
-    let yRot;
+    let pixelLength = sqrt(x*x + y*y);
+    let newAngle = atan(y/x);
 
-    for(let y = 1; y < this.RotatedImage.height; y++)
-    {
-      for(let x = 1; x < this.RotatedImage.width; x++)
-      {
-        let pixelLength = sqrt(x*x + y*y);
-        let pixelVink = atan(y/x);
+    x = round(cos(newAngle) * pixelLength);
+    y = round(sin(newAngle) * pixelLength);
 
-        let pixelRotate = pixelVink + theta;
-        
-        xRot = cos(pixelRotate) * pixelLength;
-        yRot = sin(pixelRotate) * pixelLength;
+    let pixelNum = (x + y * this.RotatedImage.width) * 4;
+    this.RotatedImage.pixels[pixelNum] = r;
+    this.RotatedImage.pixels[pixelNum + 1] = g;
+    this.RotatedImage.pixels[pixelNum + 2] = b;
+    this.RotatedImage.pixels[pixelNum + 3] = a;
+  }
 
-        print(pixelVink);
-      }
+  getPixel(x, y)
+  {
+    let pixelNum = (x + y * this.RotatedImage.width) * 4
+    let r = this.RotatedImage.pixels[pixelNum]
+    let g = this.RotatedImage.pixels[pixelNum + 1]
+    let b = this.RotatedImage.pixels[pixelNum + 2]
+    let a = this.RotatedImage.pixels[pixelNum + 3]
 
-      return [xRot, yRot];
-    }
+    return[r, g, b, a];
   }
   
   messageEncoder() {
