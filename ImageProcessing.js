@@ -199,7 +199,7 @@ Grayscale() {
     return [x, y]
   }
 
-  invert()
+  mirror()
   {
     push();
     translate(0, 0);
@@ -319,5 +319,13 @@ Grayscale() {
     return false;
 }
 
+  Webcam(video)
+  {
+    push();
+    video.loadPixels();
 
+    video.updatePixels();
+    image(video, 0, 0, video.width, video.height);
+    pop();
+  }
 }

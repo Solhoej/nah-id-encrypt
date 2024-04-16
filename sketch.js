@@ -6,8 +6,9 @@ let States = [
   "Add 1 Image and 1 text",
   "Grayscale",
   "Blackline",
-  "Invert",
+  "Mirror",
   "Rotate",
+  "Webcam"
 ]
 
 function setup() 
@@ -51,6 +52,7 @@ function setup()
   vinkelSlider = createSlider(1, 360, 1, 1);
   vinkelSlider.hide();
 
+  Video = createCapture(VIDEO);
 }
 
 function showUi(truefalse)
@@ -69,6 +71,7 @@ function showUi(truefalse)
     textY.hide();
     textX.hide();
     vinkelSlider.hide();
+    Video.hide();
   }
 }
 
@@ -104,13 +107,16 @@ function draw()
         showUi(false);
           break;
       case States[5]:
-        Machine.invert();
+        Machine.mirror();
         showUi(false);
           break;
       case States[6]:
         Machine.rotate(vinkelSlider.value());
         showUi(false);
         vinkelSlider.show();
+          break;
+      case States[7]:
+        Machine.Webcam(Video)
           break;
     }
   }
