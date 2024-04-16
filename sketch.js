@@ -8,7 +8,8 @@ let States = [
   "Blackline",
   "Mirror",
   "Rotate",
-  "Webcam"
+  "Webcam",
+  "Invert"
 ]
 
 function setup() 
@@ -117,6 +118,9 @@ function draw()
           break;
       case States[7]:
         Machine.Webcam(Video)
+          break;
+      case States[8]:
+        Machine.invert(Machine.Image1);
           break;
     }
   }

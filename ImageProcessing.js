@@ -10,11 +10,14 @@ class ImageProcessing
     this.ImageBlackline = loadImage(Image1);
     this.InvertedImage = loadImage(Image1);
     this.RotatedImage = loadImage(Image1);
+    this.ColorInvertedImage = loadImage(Image1);
     this.w = w;
     this.h = h;
     this.Process = false;
     this.img = createImage(100, 100);
     this.imgTxt = createImage(100, 100);
+    this.grayScaleVideo = createImage(100, 100);
+    this.invertVideo = createImage(100, 100);
   }
 
   setProcess(value=true)
@@ -42,6 +45,7 @@ class ImageProcessing
     this.Image1Gray.loadPixels();
     this.ImageBlackline.loadPixels();
     this.RotatedImage.loadPixels();
+    this.ColorInvertedImage.loadPixels();
     pop();
   }
 
@@ -330,10 +334,65 @@ Grayscale() {
   Webcam(video)
   {
     push();
+    this.grayScaleVideo.resize(video.width, video.height);
+    this.invertVideo.resize(video.width, video.height);
     video.loadPixels();
+    this.grayScaleVideo.loadPixels();
+    this.invertVideo.loadPixels();
+
+
+    //grayscale
+    for(let i = 0; i < video.pixels.length; i += 4)
+    {
+      let r = video.pixels[i];
+      let g = video.pixels[i+1];
+      let b = video.pixels[i+2];
+  
+      let gray = (r + g + b) / 3;
+
+      this.grayScaleVideo.pixels[i] = gray;
+      this.grayScaleVideo.pixels[i+1] = gray;
+      this.grayScaleVideo.pixels[i+2] = gray;
+      this.grayScaleVideo.pixels[i+3] = 255;
+    }
+
+    //Invert
+    for(let i = 0; i < video.pixels.length; i += 4)
+    {
+
+      this.invertVideo.pixels[i] = 255 - video.pixels[i]
+      this.invertVideo.pixels[i+1] = 255 - video.pixels[i+1];
+      this.invertVideo.pixels[i+2] = 255 - video.pixels[i+2];
+      this.invertVideo.pixels[i+3] = 255;
+    }
 
     video.updatePixels();
-    image(video, 0, 0, video.width, video.height);
+    this.grayScaleVideo.updatePixels();
+    this.invertVideo.updatePixels();
+    image(video, 0, 0, video.width/2, video.height/2);
+    image(this.grayScaleVideo, 0, video.height/2, video.width/2, video.height/2);
+    image(this.invertVideo, 0, video.height, video.width/2, video.height/2);
+
+
+
+
     pop();
   }
+
+  invert() {
+    push();
+    translate(0, 0);
+    this.Image1.loadPixels();
+    this.ColorInvertedImage.loadPixels();
+    for (let i = 0; i < this.ColorInvertedImage.pixels.length; i += 4) {
+      this.ColorInvertedImage.pixels[i] = 255 - this.Image1.pixels[i];
+      this.ColorInvertedImage.pixels[i + 1] = 255 - this.Image1.pixels[i + 1];
+      this.ColorInvertedImage.pixels[i + 2] = 255 - this.Image1.pixels[i + 2];
+    }
+    this.Image1.updatePixels();
+    this.ColorInvertedImage.updatePixels();
+    image(this.ColorInvertedImage, 0, 0, width, height);
+    pop();
+  }
+
 }
