@@ -18,6 +18,9 @@ class ImageProcessing
     this.imgTxt = createImage(100, 100);
     this.grayScaleVideo = createImage(100, 100);
     this.invertVideo = createImage(100, 100);
+    this.AddVideo = createImage(100, 100);
+    this.SubVideo = createImage(100, 100);
+    this.invertedVideo = createImage(100, 100);
   }
 
   setProcess(value=true)
@@ -334,47 +337,107 @@ Grayscale() {
   Webcam(video)
   {
     push();
+
     this.grayScaleVideo.resize(video.width, video.height);
     this.invertVideo.resize(video.width, video.height);
+    this.AddVideo.resize(video.width, video.height);
+    this.SubVideo.resize(video.width, video.height);
+    this.Image1.resize(video.width, video.height);
+    this.invertedVideo.resize(video.width, video.height);
+
     video.loadPixels();
-    this.grayScaleVideo.loadPixels();
-    this.invertVideo.loadPixels();
-
-
-    //grayscale
-    for(let i = 0; i < video.pixels.length; i += 4)
-    {
-      let r = video.pixels[i];
-      let g = video.pixels[i+1];
-      let b = video.pixels[i+2];
-  
-      let gray = (r + g + b) / 3;
-
-      this.grayScaleVideo.pixels[i] = gray;
-      this.grayScaleVideo.pixels[i+1] = gray;
-      this.grayScaleVideo.pixels[i+2] = gray;
-      this.grayScaleVideo.pixels[i+3] = 255;
-    }
-
-    //Invert
-    for(let i = 0; i < video.pixels.length; i += 4)
-    {
-
-      this.invertVideo.pixels[i] = 255 - video.pixels[i]
-      this.invertVideo.pixels[i+1] = 255 - video.pixels[i+1];
-      this.invertVideo.pixels[i+2] = 255 - video.pixels[i+2];
-      this.invertVideo.pixels[i+3] = 255;
-    }
-
     video.updatePixels();
-    this.grayScaleVideo.updatePixels();
-    this.invertVideo.updatePixels();
-    image(video, 0, 0, video.width/2, video.height/2);
-    image(this.grayScaleVideo, 0, video.height/2, video.width/2, video.height/2);
-    image(this.invertVideo, 0, video.height, video.width/2, video.height/2);
 
+    if(Selector2.value() == videoStates[0])
+    {
+      image(video, 0, 0, video.width, video.height);
+    }
+    else if(Selector2.value() == videoStates[1])
+    {
+      this.grayScaleVideo.loadPixels();
+          //grayscale
+      for(let i = 0; i < video.pixels.length; i += 4)
+      {
+        let r = video.pixels[i];
+        let g = video.pixels[i+1];
+        let b = video.pixels[i+2];
+    
+        let gray = (r + g + b) / 3;
 
+        this.grayScaleVideo.pixels[i] = gray;
+        this.grayScaleVideo.pixels[i+1] = gray;
+        this.grayScaleVideo.pixels[i+2] = gray;
+        this.grayScaleVideo.pixels[i+3] = 255;
+      }
+      this.grayScaleVideo.updatePixels();
+      image(this.grayScaleVideo, 0, 0, video.width, video.height);
+    }
+    else if(Selector2.value() == videoStates[2])
+    {
+      this.invertVideo.loadPixels();
+          //Invert
+      for(let i = 0; i < video.pixels.length; i += 4)
+      {
 
+        this.invertVideo.pixels[i] = 255 - video.pixels[i]
+        this.invertVideo.pixels[i+1] = 255 - video.pixels[i+1];
+        this.invertVideo.pixels[i+2] = 255 - video.pixels[i+2];
+        this.invertVideo.pixels[i+3] = 255;
+      }
+      this.invertVideo.updatePixels();
+        image(this.invertVideo, 0, 0, video.width, video.height);
+      }
+    else if(Selector2.value() == videoStates[3])
+    {
+      this.AddVideo.loadPixels();
+      //Add
+      for(let i = 0; i < video.pixels.length; i += 4)
+      {
+
+        this.AddVideo.pixels[i] = this.Image1.pixels[i] + video.pixels[i]
+        this.AddVideo.pixels[i+1] = this.Image1.pixels[i+1] + video.pixels[i+1]
+        this.AddVideo.pixels[i+2] = this.Image1.pixels[i+2] + video.pixels[i+2]
+        this.AddVideo.pixels[i+3] = 255;
+      }
+      this.AddVideo.updatePixels();
+      image(this.AddVideo, 0, 0, video.width, video.height);
+    }
+    else if(Selector2.value() == videoStates[4])
+    {
+      this.SubVideo.loadPixels();
+              //Sub
+              for(let i = 0; i < video.pixels.length; i += 4)
+              {
+          
+                this.SubVideo.pixels[i] = this.Image1.pixels[i] - video.pixels[i]
+                this.SubVideo.pixels[i+1] = this.Image1.pixels[i+1] - video.pixels[i+1]
+                this.SubVideo.pixels[i+2] = this.Image1.pixels[i+2] - video.pixels[i+2]
+                this.SubVideo.pixels[i+3] = 255;
+              }
+              this.SubVideo.updatePixels();
+      image(this.SubVideo, 0, 0, video.width, video.height);
+    }
+    else
+    {
+      this.invertedVideo.loadPixels();
+                //Mirror
+    for(let y = 0; y < video.height; y++)
+    {
+      for(let x = 0; x < video.width / 2; x++)
+      {
+        let leftPixel = (x + y * video.width) * 4;
+        let rightPixel = ((video.width - x - 1) + y * video.width) * 4;
+
+        for(let i = 0; i < 4; i++) {
+          let temp = video.pixels[leftPixel + i];
+          this.invertedVideo.pixels[leftPixel + i] = video.pixels[rightPixel + i];
+          this.invertedVideo.pixels[rightPixel + i] = temp;
+        }
+      }
+    }
+    this.invertedVideo.updatePixels();
+      image(this.invertedVideo, 0, 0, video.width, video.height);
+    }
 
     pop();
   }

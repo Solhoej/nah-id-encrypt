@@ -12,6 +12,15 @@ let States = [
   "Invert"
 ]
 
+let videoStates = [
+  "Normal",
+  "Grayscale",
+  "Inverted",
+  "Add",
+  "Subtract",
+  "Mirror",
+]
+
 function setup() 
 {
   createCanvas(800, 800);
@@ -24,6 +33,15 @@ function setup()
   {
     Selector.option(States[i]);
   }
+
+  Selector2 = createSelect();
+  
+  for(let i = 0; i < videoStates.length; i++)
+  {
+    Selector2.option(videoStates[i]);
+  }
+
+  Selector2.hide();
 
   inputBox = createInput('')
   inputBox.attribute('placeholder', 'type message in here')
@@ -73,6 +91,7 @@ function showUi(truefalse)
     textX.hide();
     vinkelSlider.hide();
     Video.hide();
+    Selector2.hide();
   }
 }
 
@@ -118,9 +137,12 @@ function draw()
           break;
       case States[7]:
         Machine.Webcam(Video)
+        showUi(false);
+        Selector2.show();
           break;
       case States[8]:
         Machine.invert(Machine.Image1);
+        showUi(false);
           break;
     }
   }
